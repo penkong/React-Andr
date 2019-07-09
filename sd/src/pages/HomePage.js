@@ -1,4 +1,5 @@
 import React from 'react'
+import './HomePageStyles.scss';
 
 const HomePage = () => {
   return (
