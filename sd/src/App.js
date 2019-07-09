@@ -8,7 +8,7 @@ import Shop from './pages/ShopPage/Shop';
 import SignPage from './pages/SignPage/SignPage';
 // now after firebase work in console we want to let app know
 // to store user to state of app
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 
 
@@ -21,8 +21,9 @@ class App extends Component {
   componentDidMount() {
     // this is open subscription this connection is always open
     // but we must close it on unmounted
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
       this.setState({ currentUser: user });
+      createUserProfileDocument(user);
       // console.log(user);
     });
   }
