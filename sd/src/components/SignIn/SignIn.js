@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './SignInStyles.scss';
 import FormInput from '../FormInput/FormInput';
+import CustButton from '../CustButton/CustButton';
 
 class SignIn extends Component {
   state = { email: '', password: '' };
@@ -18,7 +19,7 @@ class SignIn extends Component {
   render() {
     return (
       <div className='sign-in'>
-        <h2 className=''>I already have an account</h2>
+        <h2>I already have an account</h2>
         <span>Sing in with your email and password.</span>
         <form onSubmit={this.handleSubmit}>
           <FormInput 
@@ -37,7 +38,8 @@ class SignIn extends Component {
             value={this.state.password} 
             handleChange={this.handleChange}
           />
-          <input type="submit" value="submit"/>
+
+          <CustButton type="submit"> Sign in </CustButton>
         </form>
       </div>
     );
