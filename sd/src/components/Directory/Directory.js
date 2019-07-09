@@ -38,13 +38,11 @@ class Directory extends Component {
     }
   ]};
   renderItems() {
-    return this.state.sections.map(({title, imageUrl, id, size}) => {
+    return this.state.sections.map(({ id, ...sectionProps}) => {
       return (
         <MenuItem 
           key={id} 
-          size={size}
-          title={title} 
-          imageUrl={imageUrl}
+          {...sectionProps}
         />
       )
     })
