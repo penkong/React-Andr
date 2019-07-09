@@ -40,9 +40,10 @@ class SignIn extends Component {
             value={this.state.password} 
             handleChange={this.handleChange}
           />
-
-          <CustButton type="submit"> Sign in </CustButton>
-          <CustButton onClick={signInWithGoogle}> SIGN IN WITH GOOGLE </CustButton>
+          <div className='buttons'>
+            <CustButton type="submit"> Sign in </CustButton>
+            <CustButton onClick={signInWithGoogle} isGoogleSignIn> SIGN IN WITH GOOGLE </CustButton>
+          </div>
         </form>
       </div>
     );
