@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import './PreviewCollectionStyles.scss';
+import './CollectionPreviewStyles.scss';
+import CollectionItem from '../CollectionItem/CollectionItem';
 
 
-class PreviewCollection extends Component {
+class CollectionPreview extends Component {
   render() {
     const { title, items } = this.props;
     return (
-      <div className='preview-collection'>
+      <div className='collection-preview'>
         <h1 className='title'>{title.toUpperCase()}</h1>
         <div className='preview'>
           {
             items
               .filter((item, idx) => idx < 4)
-              .map(item => {
-                return <div key={item.id}>{item.name}</div>
+              .map(({id, ...itemsProps}) => {
+                return <CollectionItem key={id} id={id} {...itemsProps}/>
               })
           }
         </div>
@@ -22,4 +23,4 @@ class PreviewCollection extends Component {
   }
 }
 
-export default PreviewCollection;
+export default CollectionPreview;
