@@ -7,6 +7,7 @@ import './HeaderStyles.scss';
 // for svg import like this.
 import { ReactComponent as Logo } from '../../assets/ourLogo.svg';
 import { auth } from '../../firebase/firebase.utils';
+import CartIcon from '../CartIcon/CartIcon';
 
 
 class Header extends Component {
@@ -25,6 +26,7 @@ class Header extends Component {
             ? <div className='option' onClick={()=> auth.signOut()}>SIGN OUT</div>
             : <Link className='option' to='/signin'>SIGN IN</Link>
           }
+          <CartIcon/>
         </div>
       </div>
     );
