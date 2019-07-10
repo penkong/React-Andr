@@ -1,4 +1,6 @@
 import { createStore , applyMiddleware } from 'redux';
+// redux persist use local storage and session storage
+import { persistStore } from 'redux-persist';
 
 import logger from 'redux-logger';
 // redux logger to catch and display actions emit from ui
@@ -6,7 +8,11 @@ import logger from 'redux-logger';
 
 import rootReducer from './rootReducer';
 
+
+
 // middleware that store expect is in arr.
 const middlewares = [logger];
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
-export default store;
+// it let browser make decision to save
+const persistor = persistStore(store);
+export default {store, persistor};
