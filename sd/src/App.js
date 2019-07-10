@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import HomePage from "./pages/HomePage/HomePage";
 import Shop from "./pages/ShopPage/Shop";
 import SignPage from "./pages/SignPage/SignPage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 // now after firebase work in console we want to let app know
 // to store user to state of app
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -54,6 +55,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={Shop} />
+          <Route exact path="/checkout" component={CheckoutPage} />
+          
           {/* by render we decide what comp to render and show */}
           <Route exact path="/signin" 
             render={()=>
@@ -62,6 +65,7 @@ class App extends Component {
               : (<SignPage/>)
             } 
           />
+          
         </Switch>
       </div>
     );
