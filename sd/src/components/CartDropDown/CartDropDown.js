@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { selectCartItems } from '../../redux/cart/cartSelectors';
 
 import './CartDropDownStyles.scss';
 import CustButton from '../CustButton/CustButton';
@@ -22,8 +23,9 @@ class CartDropDown extends Component {
   }
 }
 
-const mapStateToProps = ({cart: {cartItems}}) => ({
-  cartItems
+// this is memoize ver with smaller state
+const mapStateToProps = state => ({
+  cartItems : selectCartItems(state)
 })
 
 export default connect(mapStateToProps)(CartDropDown);
