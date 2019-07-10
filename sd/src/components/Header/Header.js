@@ -8,6 +8,7 @@ import './HeaderStyles.scss';
 import { ReactComponent as Logo } from '../../assets/ourLogo.svg';
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../CartIcon/CartIcon';
+import CartDropDown from '../CartDropDown/CartDropDown';
 
 
 class Header extends Component {
@@ -28,6 +29,7 @@ class Header extends Component {
           }
           <CartIcon/>
         </div>
+        <CartDropDown/>
       </div>
     );
   }
