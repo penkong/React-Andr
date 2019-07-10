@@ -17,6 +17,13 @@ const firebaseConfig = {
   appId: "1:131366919277:web:9a8d447268d52c4d"
 };
 
+firebase.initializeApp(firebaseConfig);
+
+
+//......................... DB - fire store ..............
+
+export const firestore = firebase.firestore();
+
 export const createUserProfileDocument = async (userAuth, moreData) => {
   if(!userAuth) return;
   // fire store give use query reference or query snapshot
@@ -45,26 +52,17 @@ export const createUserProfileDocument = async (userAuth, moreData) => {
   }
   return userRef;
 }
-firebase.initializeApp(firebaseConfig);
 
+
+
+// ---------------------- auth ----------------------
 
 
 export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-
-
-
-
-
-
-
 // setup google authentication utility
 const provider = new firebase.auth.GoogleAuthProvider();
 // we want always google trigger pop up
 provider.setCustomParameters({ prompt: 'select_account' });
-
-
-
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export default firebase;
