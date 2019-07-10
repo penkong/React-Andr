@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux'
+
 import "./App.css";
 
 import Header from "./components/Header/Header";
@@ -9,14 +11,13 @@ import SignPage from "./pages/SignPage/SignPage";
 // now after firebase work in console we want to let app know
 // to store user to state of app
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { setCurrentUser } from "./redux/user/userAction";
 
 class App extends Component {
-  state = {
-    currentUser: null
-  };
 
   unsubscribeFromAuth = null;
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     // console.log(userAuth);
     // this is open subscription this connection is always open
     // but we must close it on unmounted
@@ -25,7 +26,7 @@ class App extends Component {
         const userRef = await createUserProfileDocument(userAuth);
         // let us get data and snapShot from db
         userRef.onSnapshot(snapShot => {
-          this.setState({
+          setCurrentUser({
             currentUser: {
               id: snapShot.id,
               ...snapShot.data()
@@ -33,7 +34,7 @@ class App extends Component {
           });
         });
       } else {
-        this.setState({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -45,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={Shop} />
@@ -56,4 +57,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);
