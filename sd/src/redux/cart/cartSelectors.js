@@ -17,6 +17,11 @@ export const selectCartItems = createSelector(
   cart => cart.cartItems
 )
 
+export const selectCartHidden = createSelector(
+  [selectCart],
+  cart => cart.hidden
+)
+
 // now make cart items selector now ( bring mapState to here)
 export const selectCartItemsCount = createSelector(
   [selectCartItems],

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect';
+
 import { selectCartItems } from '../../redux/cart/cartSelectors';
 
 import './CartDropDownStyles.scss';
@@ -24,8 +26,8 @@ class CartDropDown extends Component {
 }
 
 // this is memoize ver with smaller state
-const mapStateToProps = state => ({
-  cartItems : selectCartItems(state)
+const mapStateToProps = createStructuredSelector({
+  cartItems : selectCartItems
 })
 
 export default connect(mapStateToProps)(CartDropDown);

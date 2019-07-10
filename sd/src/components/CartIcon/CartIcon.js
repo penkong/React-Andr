@@ -1,5 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import { toggleCartAction } from '../../redux/cart/cartAction';
 import { selectCartItemsCount } from '../../redux/cart/cartSelectors';
 import './CartIconStyles.scss';
@@ -20,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 // fetch state must be memoize it 
-const mapStateToProps = state => ({
-  itemCount: selectCartItemsCount(state)
+const mapStateToProps = createStructuredSelector({
+  itemCount: selectCartItemsCount
 }) 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
