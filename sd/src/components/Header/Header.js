@@ -13,7 +13,7 @@ import CartDropDown from '../CartDropDown/CartDropDown';
 
 class Header extends Component {
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, hidden } = this.props;
     return (
       <div className='header'>
         <Link className='logo-container' to='/'>
@@ -29,14 +29,19 @@ class Header extends Component {
           }
           <CartIcon/>
         </div>
-        <CartDropDown/>
+        {
+          hidden 
+            ? null
+            : <CartDropDown/>
+        }
       </div>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+// destructure nested value
+const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+  currentUser,
+  hidden
 })
 
 export default connect(mapStateToProps)(Header);
