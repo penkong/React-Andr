@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cartSelectors';
 
 import './CheckoutPageStyles.scss';
+import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 class CheckoutPage extends Component {
   render() {
     const { cartItems, total } = this.props;
@@ -29,7 +30,7 @@ class CheckoutPage extends Component {
           </div>
         </div>
         {
-          cartItems.map(cartItem => cartItem.name)
+          cartItems.map(cartItem => <CheckoutItem key={cartItem.id} cartItem={cartItem}/>)
         }
         <div className='total'>
           <span>Total: ${total}</span>
