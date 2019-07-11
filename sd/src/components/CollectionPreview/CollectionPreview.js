@@ -13,9 +13,9 @@ class CollectionPreview extends Component {
           {
             items
               .filter((item, idx) => idx < 4)
-              .map((item => {
-                return <CollectionItem key={item.id} item={item}/>
-              }))
+              .map((item => 
+                <CollectionItem key={item.id} item={item}/>
+              ))
           }
         </div>
       </div>
