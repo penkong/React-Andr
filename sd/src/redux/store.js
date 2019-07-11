@@ -12,7 +12,6 @@ import rootReducer from './rootReducer';
 
 // middleware that store expect is in arr.
 const middlewares = [logger];
-const store = createStore(rootReducer, applyMiddleware(...middlewares));
+export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 // it let browser make decision to save
-const persistor = persistStore(store);
-export default {store, persistor};
+export const persistor = persistStore(store);
