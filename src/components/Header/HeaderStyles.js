@@ -1,4 +1,41 @@
-import styled from 'styled-components';
+// allow us to write a block of css to share between diff els
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
+export const HeaderContainer = styled.div`
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+  margin-bottom: 25px;
+`;
 
-export const HeaderStyles = styled.di 
+export const LogoContainer = styled(Link)`
+  height: 100%;
+  width: 70px;
+  padding: 25px;
+`; 
+
+export const OptionsContainer = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`; 
+
+// for code we want more than once in a single comp div or img
+// this is for sharing in comps below
+const OptionContainerStyles = css`
+  padding: 10px 15px;
+  cursor: pointer;
+`;
+
+export const OptionLink = styled(Link)`
+  ${OptionContainerStyles}
+`;
+
+export const OptionDiv = styled.div`
+  ${OptionContainerStyles}
+`;
