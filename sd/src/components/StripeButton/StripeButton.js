@@ -15,7 +15,7 @@ const StripeButton = ({ price }) => {
       name='E-Commerce'
       billingAddress
       shippingAddress
-      image='../../assets/4.1 favicon.ico.ico'
+      // image = ''
       description={`Your total is ${price}`}
       amount={priceForStripe}
       panelLabel='Pay Now'
