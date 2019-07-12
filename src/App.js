@@ -43,7 +43,10 @@ class App extends Component {
       } 
       setCurrentUser(userAuth);
       // give us hat, jackets and ... to save in fire as new name collection that named collections
-      addCollectionAndDocs('collections', collectionsArr);
+      // addCollectionAndDocs('collections', collectionsArr.map(
+      //     ({title, items}) => ({title, items})
+      //   )
+      // );
     });
   }
 
