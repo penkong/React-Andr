@@ -28,7 +28,8 @@ class Header extends Component {
           <OptionLink to='/shop'>Contact</OptionLink>
           {
             currentUser
-            ? <OptionDiv onClick={()=> auth.signOut()}>SIGN OUT</OptionDiv>
+            // also can write like : OptionLink as='div'
+            ? <OptionLink as='div' onClick={()=> auth.signOut()}>SIGN OUT</OptionLink>
             : <OptionLink to='/signin'>SIGN IN</OptionLink>
           }
           <CartIcon/>
