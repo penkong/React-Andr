@@ -10,25 +10,29 @@ import HomePage from "./pages/HomePage/HomePage";
 import Shop from "./pages/ShopPage/Shop";
 import SignPage from "./pages/SignPage/SignPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+
 // now after firebase work in console we want to let app know
 // to store user to state of app
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument, addCollectionAndDocs } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/userAction";
 import { selectCurrentUser } from "./redux/user/userSelector";
+import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
 
 class App extends Component {
 
   unsubscribeFromAuth = null;
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, collectionsArr } = this.props;
     // console.log(userAuth);
     // this is open subscription this connection is always open
     // but we must close it on unmounted
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
+        // pass uid of user to create blew
         const userRef = await createUserProfileDocument(userAuth);
         // let us get data and snapShot from db
         userRef.onSnapshot(snapShot => {
+          // action creator
           setCurrentUser({
             currentUser: {
               id: snapShot.id,
@@ -36,9 +40,10 @@ class App extends Component {
             }
           });
         });
-      } else {
-        setCurrentUser(userAuth);
-      }
+      } 
+      setCurrentUser(userAuth);
+      // give us hat, jackets and ... to save in fire as new name collection that named collections
+      addCollectionAndDocs('collections', collectionsArr);
     });
   }
 
@@ -73,7 +78,8 @@ class App extends Component {
 }
 // current user fetch
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  collectionsArr: selectCollectionsForPreview
 })
 
 // action creator
