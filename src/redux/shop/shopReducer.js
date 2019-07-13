@@ -1,8 +1,9 @@
-import SHOP_DATA from './ShopData';
+// import SHOP_DATA from './ShopData';
 import { UPDATE_COLLECTIONS } from "../types";
 
+// collections: SHOP_DATA
 const INIT_STATE = {
-  collections: SHOP_DATA
+  collections: null
 };
 
 const shopReducer = (state=INIT_STATE, action) => {
