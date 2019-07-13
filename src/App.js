@@ -19,13 +19,16 @@ import { selectCurrentUser } from "./redux/user/userSelector";
 import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
 
 class App extends Component {
-
+  // subscribe for stream listener
   unsubscribeFromAuth = null;
+
+  // its always listen until unMount ist observable but we use promise pattern on refactor
   componentDidMount() {
-    const { setCurrentUser, collectionsArr } = this.props;
+    const { setCurrentUser } = this.props;
     // console.log(userAuth);
     // this is open subscription this connection is always open
     // but we must close it on unmounted
+    // auth == stream of events, onAuth is observable, async is next() observer
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         // pass uid of user to create blew
@@ -47,7 +50,8 @@ class App extends Component {
       //     ({title, items}) => ({title, items})
       //   )
       // );
-    });
+      // observer pattern observer(next(), err(), complete());
+    }, error => console.log(error));
   }
 
   componentWillUnmount() {

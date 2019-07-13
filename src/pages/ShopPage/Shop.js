@@ -8,7 +8,7 @@ import CollectionsOverview from '../../components/CollectionsOverview/Collection
 import CollectionPage from '../CollectionPage/CollectionPage';
 import WithSpinner from '../../components/WithSpinner/WithSpinner';
 
-
+// hoc pattern
 const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
@@ -19,7 +19,8 @@ class Shop extends Component {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection('collections');
     // when ever code update or run for first time , 
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    // observable pattern has live style update
+    collectionRef.get().then(snapshot => {
       // its a util to make code less
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot)
       updateCollections(collectionsMap);
