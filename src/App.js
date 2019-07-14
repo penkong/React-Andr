@@ -29,29 +29,29 @@ class App extends Component {
     // this is open subscription this connection is always open
     // but we must close it on unmounted
     // auth == stream of events, onAuth is observable, async is next() observer
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        // pass uid of user to create blew
-        const userRef = await createUserProfileDocument(userAuth);
-        // let us get data and snapShot from db
-        userRef.onSnapshot(snapShot => {
-          // action creator
-          setCurrentUser({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
-          });
-        });
-      } 
-      setCurrentUser(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   if (userAuth) {
+    //     // pass uid of user to create blew
+    //     const userRef = await createUserProfileDocument(userAuth);
+    //     // let us get data and snapShot from db
+    //     userRef.onSnapshot(snapShot => {
+    //       // action creator
+    //       setCurrentUser({
+    //         currentUser: {
+    //           id: snapShot.id,
+    //           ...snapShot.data()
+    //         }
+    //       });
+    //     });
+    //   } 
+    //   setCurrentUser(userAuth);
       // give us hat, jackets and ... to save in fire as new name collection that named collections
       // addCollectionAndDocs('collections', collectionsArr.map(
       //     ({title, items}) => ({title, items})
       //   )
       // );
       // observer pattern observer(next(), err(), complete());
-    }, error => console.log(error));
+    // }, error => console.log(error));
   }
 
   componentWillUnmount() {

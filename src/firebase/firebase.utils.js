@@ -57,6 +57,10 @@ export const createUserProfileDocument = async (userAuth, moreData) => {
   }
   return userRef;
 }
+
+
+
+
 // Query ref == show current place in db
 // collection snapshot obj call query snapshot  firestore.collections()
 // document snapshot obj call query reference   firestore.doc()
@@ -83,6 +87,9 @@ export const addCollectionAndDocs = async (collectionKey, objectToAdd) => {
   return await batch.commit();
 }
 
+
+
+
 /// new function to get whole snapshot on cmd in shop page for collections
 export const convertCollectionsSnapshotToMap = collections => {
   const transformedCollection = collections.docs.map(doc => {
@@ -102,22 +109,15 @@ export const convertCollectionsSnapshotToMap = collections => {
 
 
 
-
-
-
-
-
-
-
-
 // ---------------------- auth ----------------------
 
 
 export const auth = firebase.auth();
 // setup google authentication utility
-const provider = new firebase.auth.GoogleAuthProvider();
+// const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 // we want always google trigger pop up
-provider.setCustomParameters({ prompt: 'select_account' });
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 export default firebase;
