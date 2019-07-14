@@ -1,19 +1,32 @@
 // import certain effects
 // allow us to diff things with store or actions or listening
 // saga purpose is to run whole these sagas concurrently(without block exec)
-
-import { takeEvery } from "redux-saga/effects";
 import { FETCH_COLLECTIONS_START } from "../types";
+import { firestore, convertCollectionsSnapshotToMap } from "../../firebase/firebase.utils";
+// put == dispatch in thunk
+import { takeEvery, call, put } from "redux-saga/effects";
+import { fetchCollectionsSuccess, fetchCollectionsFailure } from "./shopAction";
 
 // a task saga runs 
 export function* fetchCollectionsAsync() {
-  yield console.log('I am fired');
+  try {
+    const collectionRef = firestore.collection('collections');
+    const snapshot = yield collectionRef.get();
+    // use call because we yield it if it take more time than we expect
+    const collectionsMap =  yield call(convertCollectionsSnapshotToMap, snapshot);
+    // put is saga effect to create action
+    // dispatch out an obj
+    yield put(fetchCollectionsSuccess(collectionsMap))
+  } catch (error) {
+    yield put(fetchCollectionsFailure(error.message));
+  }  
 }
 
 export function* fetchCollectionsStart() {
   // non blocking call
   yield takeEvery(FETCH_COLLECTIONS_START, fetchCollectionsAsync )
 }
+
 
 
 

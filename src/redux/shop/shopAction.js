@@ -18,16 +18,16 @@ export const fetchCollectionsFailure = errorMessage => ({
 
 // when ever code update or run for first time , 
 // observable pattern has live style update
-export const fetchCollectionsStartAsync = () => dispatch => {
+// export const fetchCollectionsStartAsync = () => dispatch => {
   
-  const collectionRef = firestore.collection('collections');
+//   const collectionRef = firestore.collection('collections');
 
-  dispatch(fetchCollectionsStart());
+//   dispatch(fetchCollectionsStart());
 
-  collectionRef.get().then(snapshot => {
-    // its a util to make code less
-    const collectionsMap = convertCollectionsSnapshotToMap(snapshot)
-    dispatch(fetchCollectionsSuccess(collectionsMap));
+//   collectionRef.get().then(snapshot => {
+//     // its a util to make code less
+//     const collectionsMap = convertCollectionsSnapshotToMap(snapshot)
+//     dispatch(fetchCollectionsSuccess(collectionsMap));
 
-  }).catch(error=> dispatch(fetchCollectionsFailure(error.message)))
-}
+//   }).catch(error=> dispatch(fetchCollectionsFailure(error.message)))
+// }
