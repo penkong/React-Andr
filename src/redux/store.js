@@ -13,8 +13,9 @@ import logger from 'redux-logger';
 // for handle side effects and APIs and impure funcs
 // with usage of generator and resembler (pause funcs)
 import createSagaMiddleware from 'redux-saga';
+
 import rootReducer from './rootReducer';
-import { fetchCollectionsStart } from './shop/shopSagas';
+import rootSaga from './rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -27,6 +28,6 @@ if(process.env.NODE_ENV === 'development') {
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
-sagaMiddleware.run(fetchCollectionsStart);
+sagaMiddleware.run(rootSaga);
 // it let browser make decision to save
 export const persistor = persistStore(store);

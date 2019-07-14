@@ -4,7 +4,10 @@
 import { FETCH_COLLECTIONS_START } from "../types";
 import { firestore, convertCollectionsSnapshotToMap } from "../../firebase/firebase.utils";
 // put == dispatch in thunk
-import { takeEvery, call, put } from "redux-saga/effects";
+// take alone effect give us back payload
+// take every allow us to run every call but take run one time
+// take is like while(){} ,, delay() effect
+import { takeLatest, call, put } from "redux-saga/effects";
 import { fetchCollectionsSuccess, fetchCollectionsFailure } from "./shopAction";
 
 // a task saga runs 
@@ -24,7 +27,7 @@ export function* fetchCollectionsAsync() {
 
 export function* fetchCollectionsStart() {
   // non blocking call
-  yield takeEvery(FETCH_COLLECTIONS_START, fetchCollectionsAsync )
+  yield takeLatest(FETCH_COLLECTIONS_START, fetchCollectionsAsync )
 }
 
 
