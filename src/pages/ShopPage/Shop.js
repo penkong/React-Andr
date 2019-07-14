@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom';
 
-import { fetchCollectionsStartAsync } from "../../redux/shop/shopAction";
+import { fetchCollectionsStart } from "../../redux/shop/shopAction";
 import { CollectionsOverviewContainer } from '../../components/CollectionsOverview/CollectionsOverviewContainer';
 import { CollectionPageContainer } from '../CollectionPage/CollectionPageContainer';
 
 class Shop extends Component {
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
   }
   
   render() {
@@ -30,8 +30,8 @@ class Shop extends Component {
 // we bring it here but in reality first point of this is in cdm
 // calling action from ui
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStartAsync: 
-    () => dispatch(fetchCollectionsStartAsync()),
+  fetchCollectionsStart: 
+    () => dispatch(fetchCollectionsStart()),
 })
 
 export default connect(null, mapDispatchToProps)(Shop);
