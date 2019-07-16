@@ -13,18 +13,18 @@ import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 // now after firebase work in console we want to let app know
 // to store user to state of app
-import { auth, createUserProfileDocument, addCollectionAndDocs } from "./firebase/firebase.utils";
-import { setCurrentUser } from "./redux/user/userAction";
+// import { auth, createUserProfileDocument, addCollectionAndDocs } from "./firebase/firebase.utils";
+// import { setCurrentUser } from "./redux/user/userAction";
 import { selectCurrentUser } from "./redux/user/userSelector";
 import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
 
 class App extends Component {
   // subscribe for stream listener
-  unsubscribeFromAuth = null;
+  // unsubscribeFromAuth = null;
 
   // its always listen until unMount ist observable but we use promise pattern on refactor
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    // const { setCurrentUser } = this.props;
     // console.log(userAuth);
     // this is open subscription this connection is always open
     // but we must close it on unmounted
@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    // this.unsubscribeFromAuth();
   }
 
   render() {
@@ -90,8 +90,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 // action creator
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-})
+// const mapDispatchToProps = dispatch => ({
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
