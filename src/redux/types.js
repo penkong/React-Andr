@@ -20,3 +20,5 @@ export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
 export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
 
 export const CHECK_USER_SESSION = 'CHECK_USER_SESSION';
+
+export const CLEAR_CART = 'CLEAR_CART';

@@ -7,7 +7,7 @@ import { firestore, convertCollectionsSnapshotToMap } from "../../firebase/fireb
 // take alone effect give us back payload
 // take every allow us to run every call but take run one time
 // take is like while(){} ,, delay() effect
-import { takeLatest, call, put } from "redux-saga/effects";
+import { all, takeLatest, call, put } from "redux-saga/effects";
 import { fetchCollectionsSuccess, fetchCollectionsFailure } from "./shopAction";
 
 // a task saga runs 
@@ -29,6 +29,15 @@ export function* fetchCollectionsStart() {
   // non blocking call
   yield takeLatest(FETCH_COLLECTIONS_START, fetchCollectionsAsync )
 }
+
+export function* shopSagas() {
+  yield all([
+    call(fetchCollectionsStart),
+  ])
+}
+
+
+
 
 
 
