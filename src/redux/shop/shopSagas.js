@@ -18,7 +18,7 @@ export function* fetchCollectionsAsync() {
     // use call because we yield it if it take more time than we expect
     const collectionsMap =  yield call(convertCollectionsSnapshotToMap, snapshot);
     // put is saga effect to create action
-    // dispatch out an obj
+    // dispatch out an obj ==> it go from here again to saga middleware => reducers
     yield put(fetchCollectionsSuccess(collectionsMap))
   } catch (error) {
     yield put(fetchCollectionsFailure(error.message));

@@ -17,10 +17,11 @@ import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 // import { setCurrentUser } from "./redux/user/userAction";
 import { selectCurrentUser } from "./redux/user/userSelector";
 import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
+import { checkUserSession } from "./redux/user/userAction";
 
 class App extends Component {
   // subscribe for stream listener
-  // unsubscribeFromAuth = null;
+  unsubscribeFromAuth = null;
 
   // its always listen until unMount ist observable but we use promise pattern on refactor
   componentDidMount() {
@@ -52,10 +53,12 @@ class App extends Component {
       // );
       // observer pattern observer(next(), err(), complete());
     // }, error => console.log(error));
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   componentWillUnmount() {
-    // this.unsubscribeFromAuth();
+    this.unsubscribeFromAuth();
   }
 
   render() {
@@ -89,9 +92,12 @@ const mapStateToProps = createStructuredSelector({
   collectionsArr: selectCollectionsForPreview
 })
 
-// action creator
-// const mapDispatchToProps = dispatch => ({
-//   setCurrentUser: user => dispatch(setCurrentUser(user))
-// })
 
-export default connect(mapStateToProps)(App);
+// action creator
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
+
+// comp => dispatch action => saga middle => do stuff => saga middle => reducer
