@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {  useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,72 +19,31 @@ import { selectCurrentUser } from "./redux/user/userSelector";
 import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
 import { checkUserSession } from "./redux/user/userAction";
 
-class App extends Component {
-  // subscribe for stream listener
-  unsubscribeFromAuth = null;
 
-  // its always listen until unMount ist observable but we use promise pattern on refactor
-  componentDidMount() {
-    // const { setCurrentUser } = this.props;
-    // console.log(userAuth);
-    // this is open subscription this connection is always open
-    // but we must close it on unmounted
-    // auth == stream of events, onAuth is observable, async is next() observer
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     // pass uid of user to create blew
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     // let us get data and snapShot from db
-    //     userRef.onSnapshot(snapShot => {
-    //       // action creator
-    //       setCurrentUser({
-    //         currentUser: {
-    //           id: snapShot.id,
-    //           ...snapShot.data()
-    //         }
-    //       });
-    //     });
-    //   } 
-    //   setCurrentUser(userAuth);
-      // give us hat, jackets and ... to save in fire as new name collection that named collections
-      // addCollectionAndDocs('collections', collectionsArr.map(
-      //     ({title, items}) => ({title, items})
-      //   )
-      // );
-      // observer pattern observer(next(), err(), complete());
-    // }, error => console.log(error));
-    const { checkUserSession } = this.props;
+const App = ({ checkUserSession, currentUser }) => {
+  useEffect(() => {
     checkUserSession();
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    const { currentUser } = this.props;
-
-    return (
-      <div>
-        <Header/>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/shop" component={Shop} />
-          <Route exact path="/checkout" component={CheckoutPage} />
-          
-          {/* by render we decide what comp to render and show */}
-          <Route exact path="/signin" 
-            render={()=>
-              currentUser 
-              ? (<Redirect to='/'/>) 
-              : (<SignPage/>)
-            } 
-          />
-          
-        </Switch>
-      </div>
-    );
-  }
+  }, [checkUserSession])
+  return (
+    <div>
+      <Header/>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/shop" component={Shop} />
+        <Route exact path="/checkout" component={CheckoutPage} />
+        
+        {/* by render we decide what comp to render and show */}
+        <Route exact path="/signin" 
+          render={()=>
+            currentUser 
+            ? (<Redirect to='/'/>) 
+            : (<SignPage/>)
+          } 
+        />
+        
+      </Switch>
+    </div>
+  );
 }
 // current user fetch
 const mapStateToProps = createStructuredSelector({
@@ -99,5 +58,75 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);
+
+
+// class App extends Component {
+//   // subscribe for stream listener
+//   unsubscribeFromAuth = null;
+
+//   // its always listen until unMount ist observable but we use promise pattern on refactor
+//   componentDidMount() {
+//     // const { setCurrentUser } = this.props;
+//     // console.log(userAuth);
+//     // this is open subscription this connection is always open
+//     // but we must close it on unmounted
+//     // auth == stream of events, onAuth is observable, async is next() observer
+//     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+//     //   if (userAuth) {
+//     //     // pass uid of user to create blew
+//     //     const userRef = await createUserProfileDocument(userAuth);
+//     //     // let us get data and snapShot from db
+//     //     userRef.onSnapshot(snapShot => {
+//     //       // action creator
+//     //       setCurrentUser({
+//     //         currentUser: {
+//     //           id: snapShot.id,
+//     //           ...snapShot.data()
+//     //         }
+//     //       });
+//     //     });
+//     //   } 
+//     //   setCurrentUser(userAuth);
+//       // give us hat, jackets and ... to save in fire as new name collection that named collections
+//       // addCollectionAndDocs('collections', collectionsArr.map(
+//       //     ({title, items}) => ({title, items})
+//       //   )
+//       // );
+//       // observer pattern observer(next(), err(), complete());
+//     // }, error => console.log(error));
+//     const { checkUserSession } = this.props;
+//     checkUserSession();
+//   }
+
+//   componentWillUnmount() {
+//     this.unsubscribeFromAuth();
+//   }
+
+//   render() {
+//     const { currentUser } = this.props;
+
+//     return (
+//       <div>
+//         <Header/>
+//         <Switch>
+//           <Route exact path="/" component={HomePage} />
+//           <Route exact path="/shop" component={Shop} />
+//           <Route exact path="/checkout" component={CheckoutPage} />
+          
+//           {/* by render we decide what comp to render and show */}
+//           <Route exact path="/signin" 
+//             render={()=>
+//               currentUser 
+//               ? (<Redirect to='/'/>) 
+//               : (<SignPage/>)
+//             } 
+//           />
+          
+//         </Switch>
+//       </div>
+//     );
+//   }
+// }
+
 
 // comp => dispatch action => saga middle => do stuff => saga middle => reducer
