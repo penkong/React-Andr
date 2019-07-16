@@ -3,13 +3,15 @@ import {
   GOOGLE_SIGN_IN_START, 
   EMAIL_SIGN_IN_START, 
   CHECK_USER_SESSION, 
-  SIGN_OUT_START
+  SIGN_OUT_START,
+  SIGN_UP_START,
+  SIGN_UP_SUCCESS
 } from "../types";
 import { 
+  signUpSuccess,
+  signUpFailure,
   singInSuccess, 
   singInFailure,
-  singOutSuccess, 
-  singOutFailure,
   signOutSuccess,
   signOutFailure,
 } from "./userAction";
@@ -20,9 +22,32 @@ import {
   getCurrentUser
 } from "../../firebase/firebase.utils";
 
-export function* getSnapshotFromUserAuth(userAuth) {
+
+// userCredentials
+export function* signUp({ payload: { email, password, displayName }}) {
   try {
-    const userRef = yield call(createUserProfileDocument, userAuth);
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    yield put(signUpSuccess({ user, additionalData: { displayName }}));
+  } catch (error) {
+    yield put(signUpFailure(error))
+  }
+}
+
+export function* onSignUpStart() {
+    yield takeLatest(SIGN_UP_START, signUp)
+}
+//////////////
+export function* signInAfterSignUp ({ payload: { user, additionalData }}) {
+  yield getSnapshotFromUserAuth(user, additionalData);
+}
+
+export function* onSignUpSuccess() {
+    yield takeLatest(SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+///////////////
+export function* getSnapshotFromUserAuth(userAuth, additionalData ) {
+  try {
+    const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
     const userSnapshot = yield userRef.get();
     // put dispatch things into regular redux flow
     yield put(singInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
@@ -30,7 +55,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
     yield put(singInFailure(error));
   }
 }
-
+//////////////
 export function* signInWithGoogle() {
   try {
     const { user } = yield auth.signInWithPopup(googleProvider);
@@ -43,7 +68,7 @@ export function* signInWithGoogle() {
 export function* onGoogleSignInStart() {
   yield takeLatest(GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
-
+//////////////
 export function* signInWithEmail ({ payload: { email, password }}) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
@@ -56,7 +81,7 @@ export function* signInWithEmail ({ payload: { email, password }}) {
 export function* onEmailSignInStart() {
   yield takeLatest(EMAIL_SIGN_IN_START, signInWithEmail);
 }
-
+/////////////
 export function* isUserAuthenticated() {
   try {
     const userAuth = yield getCurrentUser();
@@ -70,7 +95,7 @@ export function* isUserAuthenticated() {
 export function* onCheckUserSession() {
   yield takeLatest(CHECK_USER_SESSION, isUserAuthenticated);
 }
-
+//////////////
 export function* signOut() {
   try {
     yield auth.signOut();
@@ -83,9 +108,11 @@ export function* signOut() {
 export function* onSignOutStart() {
   yield takeLatest(SIGN_OUT_START, signOut);
 }
-
+/////////////
 export function* userSagas() {
   yield all([
+    call(onSignUpStart),
+    call(onSignUpSuccess),
     call(onGoogleSignInStart), 
     call(onEmailSignInStart),
     call(onCheckUserSession),

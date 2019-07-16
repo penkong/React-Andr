@@ -2,7 +2,8 @@ import {
   SIGN_IN_SUCCESS, 
   SIGN_IN_FAILURE, 
   SIGN_OUT_SUCCESS, 
-  SIGN_OUT_FAILURE, 
+  SIGN_OUT_FAILURE,
+  SIGN_UP_FAILURE, 
 } from '../types';
 
 const INIT_STATE = {
@@ -18,6 +19,7 @@ const userReducer = (state= INIT_STATE, action) => {
       return { ...state, currentUser: null , error: null };
     case SIGN_IN_FAILURE:
     case SIGN_OUT_FAILURE:
+    case SIGN_UP_FAILURE:
       return { ...state, error: action.payload };
     default:
       return state;
