@@ -11,14 +11,15 @@ import { selectCurrentUser } from "./redux/user/userSelector";
 import { selectCollectionsForPreview } from "./redux/shop/shopSelector";
 import { checkUserSession } from "./redux/user/userAction";
 // make lazy loading 
-import Header from "./components/Header/Header";
 import "./App.css";
+import Header from "./components/Header/Header";
 import Spinner from "./components/Spinner/Spinner";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const Shop = lazy(() => import('./pages/ShopPage/Shop'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage/CheckoutPage'));
 const SignPage = lazy(() => import('./pages/SignPage/SignPage'));
-
+// on suspense use error handling if we lose connection ==> error boundary work like suspense
 
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
@@ -28,22 +29,24 @@ const App = ({ checkUserSession, currentUser }) => {
     <div>
       <Header/>
       <Switch>
-        {/* suspense for async loading comp with lazy */}
-        <Suspense fallback={Spinner}>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/shop" component={Shop} />
-          
-          <Route exact path="/checkout" component={CheckoutPage} />
-          
-          {/* by render we decide what comp to render and show */}
-          <Route exact path="/signin" 
-            render={()=>
-              currentUser 
-              ? (<Redirect to='/'/>) 
-              : (<SignPage/>)
-            } 
-          />
-        </Suspense>
+        <ErrorBoundary>
+          {/* suspense for async loading comp with lazy */}
+          <Suspense fallback={Spinner}>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/shop" component={Shop} />
+            
+            <Route exact path="/checkout" component={CheckoutPage} />
+            
+            {/* by render we decide what comp to render and show */}
+            <Route exact path="/signin" 
+              render={()=>
+                currentUser 
+                ? (<Redirect to='/'/>) 
+                : (<SignPage/>)
+              } 
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
   );
