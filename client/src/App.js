@@ -20,7 +20,8 @@ const Shop = lazy(() => import('./pages/ShopPage/Shop'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage/CheckoutPage'));
 const SignPage = lazy(() => import('./pages/SignPage/SignPage'));
 // on suspense use error handling if we lose connection ==> error boundary work like suspense
-
+// optimization technic when func comp parent render func comp rerender auto
+// use react.memo(func comp == use hoc pattern) for it or react.pureComp(class comp)
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
     checkUserSession();
